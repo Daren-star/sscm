@@ -17,7 +17,7 @@
 │   ├── src
 │   │   ├── main
 │   │   │   ├── java
-│   │   │   │   └── com.lsw.sscm
+│   │   │   │   └── com.example.backend
 │   │   │   │       ├── config  # 配置类
 │   │   │   │       ├── controller  # 控制器
 │   │   │   │       ├── mapper  # MyBatis Mapper
@@ -30,6 +30,11 @@
 │   │   │       ├── application.yml  # 配置文件
 │   │   │       ├── mapper  # MyBatis Mapper XML
 │   │   │       └── static
+├── img
+│   ├── cou  #课程图片
+│   ├── stu  #学生头像
+│   └── tea  #教师头像
+└── sscm.sql  #sql文件
 ```
 
 ## 快速开始
