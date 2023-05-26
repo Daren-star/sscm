@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "spring.redis.host.port",
-      "type": "java.lang.String",
-      "description": "Description for spring.redis.host.port."
-  }
-] }
