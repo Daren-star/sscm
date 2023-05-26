@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsw.sscm.mapper.ScCourseMapper">
+
+    <resultMap id="BaseResultMap" type="com.lsw.sscm.pojo.ScCourse">
+            <id property="courseId" column="course_id" jdbcType="INTEGER"/>
+            <result property="teacherId" column="teacher_id" jdbcType="VARCHAR"/>
+            <result property="courseName" column="course_name" jdbcType="VARCHAR"/>
+            <result property="courseCredit" column="course_credit" jdbcType="FLOAT"/>
+            <result property="courseClass" column="course_class" jdbcType="SMALLINT"/>
+            <result property="courseDesc" column="course_desc" jdbcType="VARCHAR"/>
+            <result property="courseNum" column="course_num" jdbcType="SMALLINT"/>
+            <result property="courseImg" column="course_img" jdbcType="VARCHAR"/>
+            <result property="courseRenum" column="course_renum" javaType="INTEGER"/>
+<!--            <association property="courseRenum" column="course_id" select="com.lsw.sscm.mapper.ScStuscoreMapper.getSumReNub" javaType="java.lang.Integer"/>-->
+     </resultMap>
+
+    <sql id="Base_Column_List">
+        course_id,teacher_id,course_name,
+        course_credit,course_class,course_desc,
+        course_num,course_img,course_renum
+    </sql>
+    <select id="getCourse" resultType="com.lsw.sscm.pojo.ScCourse" resultMap="BaseResultMap">
+        select c.*,count(s.course_id) as courseRenum from sscm.sc_course c
+            left join sscm.sc_stuscore s on c.course_id = s.course_id
+        where c.course_id = #{id}
+    </select>
+    <select id="getListCou" resultType="com.lsw.sscm.pojo.ScCourse">
+        select c.*,count(s.course_id) as courseRenum from sscm.sc_course c
+            left join sscm.sc_stuscore s on c.course_id = s.course_id
+        where c.course_id = #{id}
+    </select>
+</mapper>

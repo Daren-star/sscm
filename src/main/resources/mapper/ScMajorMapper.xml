@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsw.sscm.mapper.ScMajorMapper">
+
+    <resultMap id="BaseResultMap" type="com.lsw.sscm.pojo.ScMajor">
+            <id property="majorId" column="major_id" jdbcType="INTEGER"/>
+            <result property="deptId" column="dept_id" jdbcType="CHAR"/>
+            <result property="majorName" column="major_name" jdbcType="VARCHAR"/>
+            <result property="majorAssistant" column="major_assistant" jdbcType="VARCHAR"/>
+            <result property="majorTel" column="major_tel" jdbcType="VARCHAR"/>
+            <result property="majorDesc" column="major_desc" jdbcType="VARCHAR"/>
+            <association property="sumStu" column="major_id" javaType="int" select="com.lsw.sscm.mapper.ScStudentMapper.sumStu"/>
+     </resultMap>
+
+    <sql id="Base_Column_List">
+        major_id,dept_id,major_name,
+        major_assistant,major_tel,major_desc
+    </sql>
+    <select id="getMajor" resultType="com.lsw.sscm.pojo.ScMajor">
+        select * from sscm.sc_major where major_id=#{id}
+    </select>
+    <select id="getAllMajor" resultType="com.lsw.sscm.pojo.ScMajor" resultMap="BaseResultMap">
+        select * from sscm.sc_major
+    </select>
+
+</mapper>

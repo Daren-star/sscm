@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsw.sscm.mapper.ScStudentMapper">
+
+    <resultMap id="BaseResultMap" type="com.lsw.sscm.pojo.ScStudent">
+            <id property="studentId" column="student_id" jdbcType="INTEGER"/>
+            <result property="majorId" column="major_id" jdbcType="CHAR"/>
+            <result property="studentName" column="student_name" jdbcType="VARCHAR"/>
+            <result property="studentSex" column="student_sex" jdbcType="CHAR"/>
+            <result property="studentBirthday" column="student_birthday" jdbcType="DATE"/>
+            <result property="studentPassword" column="student_password" jdbcType="VARCHAR"/>
+            <result property="studentImg" column="student_img" jdbcType="VARCHAR"/>
+            <association property="scMajor" column="major_id" select="com.lsw.sscm.mapper.ScMajorMapper.getMajor" javaType="com.lsw.sscm.pojo.ScMajor"/>
+            <collection property="scCourse" column="course_id" select="com.lsw.sscm.mapper.ScCourseMapper.getListCou" javaType="ArrayList" ofType="com.lsw.sscm.pojo.ScCourse"/>
+            <collection  property="scStuscore" column="student_id" select="com.lsw.sscm.mapper.ScStuscoreMapper.getListStu" javaType="ArrayList" ofType="com.lsw.sscm.pojo.ScStuscore"/>
+     </resultMap>
+
+    <sql id="Base_Column_List">
+        student_id,major_id,student_name,
+        student_sex,student_birthday,student_password,
+        student_img,scMajor,scStuscore,scCourse
+    </sql>
+    <select id="getStudentById" resultType="com.lsw.sscm.pojo.ScStudent" resultMap="BaseResultMap">
+        SELECT *
+        FROM sscm.sc_student s
+                 LEFT JOIN sscm.sc_major m ON s.major_id = m.major_id
+        WHERE s.student_id = #{id}
+    </select>
+    <select id="getStudentNoPass" resultType="com.lsw.sscm.pojo.ScStudent">
+        select student_id,student_name,student_img from sscm.sc_student where student_id = #{id}
+    </select>
+    <select id="getStudentPage" resultType="com.lsw.sscm.pojo.ScStudent" resultMap="BaseResultMap">
+        SELECT *
+        FROM sscm.sc_student s
+                 LEFT JOIN sscm.sc_major m ON s.major_id = m.major_id
+    </select>
+
+
+</mapper>

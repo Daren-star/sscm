@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsw.sscm.mapper.ScStuscoreMapper">
+
+    <resultMap id="BaseResultMap" type="com.lsw.sscm.pojo.ScStuscore">
+            <id property="stuscoreId" column="stuscore_id" jdbcType="INTEGER"/>
+            <result property="studentId" column="student_id" jdbcType="INTEGER"/>
+            <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+            <result property="teacherId" column="teacher_id" jdbcType="INTEGER"/>
+            <result property="dailyScore" column="daily_score" jdbcType="FLOAT"/>
+            <result property="finalGrade" column="final_grade" jdbcType="FLOAT"/>
+            <result property="totalScore" column="total_score" jdbcType="FLOAT"/>
+            <association property="scStudent" column="student_id" select="com.lsw.sscm.mapper.ScStudentMapper.getStudentNoPass" javaType="com.lsw.sscm.pojo.ScStudent">
+            </association>
+    </resultMap>
+
+    <resultMap id="StudentResultMap" type="com.lsw.sscm.pojo.ScStuscore">
+        <id property="stuscoreId" column="stuscore_id" jdbcType="INTEGER"/>
+        <result property="studentId" column="student_id" jdbcType="INTEGER"/>
+        <result property="courseId" column="course_id" jdbcType="INTEGER"/>
+        <result property="teacherId" column="teacher_id" jdbcType="INTEGER"/>
+        <result property="dailyScore" column="daily_score" jdbcType="FLOAT"/>
+        <result property="finalGrade" column="final_grade" jdbcType="FLOAT"/>
+        <result property="totalScore" column="total_score" jdbcType="FLOAT"/>
+        <association property="scCourse" column="course_id" select="com.lsw.sscm.mapper.ScCourseMapper.getCourse" javaType="com.lsw.sscm.pojo.ScCourse">
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        stuscore_id,student_id,course_id,
+        teacher_id,daily_score,final_grade,total_score,scStudent
+    </sql>
+    <select id="getStuscorePageByTeacherId" resultType="com.lsw.sscm.pojo.ScStuscore" resultMap="BaseResultMap">
+        SELECT *
+        FROM sscm.sc_stuscore s
+                 left join sscm.sc_student stu on s.student_id = stu.student_id
+        WHERE s.teacher_id = #{techerId}
+    </select>
+    <select id="getListStu" resultType="com.lsw.sscm.pojo.ScStuscore" resultMap="StudentResultMap">
+        select *
+        from sc_stuscore s
+            left join sc_course c on s.course_id = c.course_id
+        where s.student_id = #{id}
+    </select>
+
+
+</mapper>

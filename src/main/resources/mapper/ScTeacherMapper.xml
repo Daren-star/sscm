@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsw.sscm.mapper.ScTeacherMapper">
+
+    <resultMap id="BaseResultMap" type="com.lsw.sscm.pojo.ScTeacher">
+            <id property="teacherId" column="teacher_id" jdbcType="INTEGER"/>
+            <result property="deptId" column="dept_id" jdbcType="CHAR"/>
+            <result property="courseId" column="course_id" javaType="INTEGER"/>
+            <result property="teacherName" column="teacher_name" jdbcType="VARCHAR"/>
+            <result property="teacherSex" column="teacher_sex" jdbcType="CHAR"/>
+            <result property="teacherBirthday" column="teacher_birthday" jdbcType="DATE"/>
+            <result property="teacherTitle" column="teacher_title" jdbcType="VARCHAR"/>
+            <result property="teacherPassword" column="teacher_password" jdbcType="VARCHAR"/>
+            <result property="teacherPermission" column="teacher_permission" jdbcType="CHAR"/>
+            <result property="teacherImg" column="teacher_img" jdbcType="VARCHAR"/>
+            <association property="scDept" column="dept_id" select="com.lsw.sscm.mapper.ScDeptMapper.getDept" javaType="com.lsw.sscm.pojo.ScDept">
+            </association>
+            <association property="scCourse" column="course_id" select="com.lsw.sscm.mapper.ScCourseMapper.getCourse" javaType="com.lsw.sscm.pojo.ScCourse">
+            </association>
+    </resultMap>
+
+
+
+    <resultMap id="AdminResultMap" type="com.lsw.sscm.pojo.ScTeacher">
+        <id property="teacherId" column="teacher_id" jdbcType="INTEGER"/>
+        <result property="deptId" column="dept_id" jdbcType="CHAR"/>
+        <result property="courseId" column="course_id" javaType="INTEGER"/>
+        <result property="teacherName" column="teacher_name" jdbcType="VARCHAR"/>
+        <result property="teacherSex" column="teacher_sex" jdbcType="CHAR"/>
+        <result property="teacherBirthday" column="teacher_birthday" jdbcType="DATE"/>
+        <result property="teacherTitle" column="teacher_title" jdbcType="VARCHAR"/>
+        <result property="teacherPassword" column="teacher_password" jdbcType="VARCHAR"/>
+        <result property="teacherPermission" column="teacher_permission" jdbcType="CHAR"/>
+        <result property="teacherImg" column="teacher_img" jdbcType="VARCHAR"/>
+        <association property="scDept" column="dept_id" select="com.lsw.sscm.mapper.ScDeptMapper.getDept" javaType="com.lsw.sscm.pojo.ScDept">
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        teacher_id,dept_id,course_id,teacher_name,
+        teacher_sex,teacher_birthday,teacher_title,
+        teacher_password,teacher_permission,teacher_img,scCourse,scDept
+    </sql>
+
+    <select id="getTeacherById" resultMap="BaseResultMap">
+        SELECT *
+        FROM sscm.sc_teacher t
+                left join sscm.sc_course c ON t.course_id = c.course_id
+                left join sscm.sc_dept d on t.dept_id = d.dept_id
+        WHERE t.teacher_id = #{id}
+    </select>
+    <select id="getAdminById" resultType="com.lsw.sscm.pojo.ScTeacher" resultMap="BaseResultMap">
+        SELECT *
+        FROM sscm.sc_teacher t
+                 left join sscm.sc_dept d on t.dept_id = d.dept_id
+        WHERE t.teacher_id = #{id}
+    </select>
+    <select id="getTeacherPage" resultType="com.lsw.sscm.pojo.ScTeacher" resultMap="BaseResultMap">
+        SELECT *
+        FROM sscm.sc_teacher
+    </select>
+</mapper>
